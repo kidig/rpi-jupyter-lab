@@ -9,15 +9,11 @@
 FROM resin/raspberrypi3-python:3.6
 MAINTAINER Dmitry Gerasimenko <kiddima@gmail.com>
 
-# Set the variables
-ENV DEBIAN_FRONTEND noninteractive
-
 WORKDIR /root
 
 # Update pip and install jupyter
-RUN apt-get update && apt-get install -y \
-        libncurses5-dev \
-        libzmq-dev
+RUN apt-get update && apt-get install -y libncurses5-dev libzmq-dev libfreetype6-dev libpng-dev
+
 RUN pip3 install --upgrade pip
 RUN pip3 install readline jupyter
 
