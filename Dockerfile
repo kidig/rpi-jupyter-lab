@@ -10,13 +10,13 @@ FROM resin/rpi-raspbian:jessie
 MAINTAINER Dmitry Gerasimenko <kiddima@gmail.com>
 
 # Set the variables
-ENV DEBIAN_FRONTEND noninteractive
+#ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHON_VERSION 3.6.6
 
 WORKDIR /root
 
 # Install packages necessary for compiling python
-RUN apt-get update && apt-get upgrade && apt-get install -y \
+RUN apt-get update && apt-get install -y \
         build-essential \
         libncursesw5-dev \
         libgdbm-dev \
@@ -41,7 +41,7 @@ RUN tar zxvf "Python-${PYTHON_VERSION}.tgz" \
         && rm "./Python-${PYTHON_VERSION}.tgz"
 
 # Update pip and install jupyter
-RUN apt-get install -y libncurses5-dev
+RUN apt-get install -y libncurses5-dev libzmq-dev libfreetype6-dev libpng-dev
 RUN pip3 install --upgrade pip
 RUN pip3 install readline jupyter
 
