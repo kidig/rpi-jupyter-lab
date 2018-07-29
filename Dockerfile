@@ -15,10 +15,12 @@ WORKDIR /root
 RUN apt-get update && apt-get install -y libncurses5-dev libzmq-dev libfreetype6-dev libpng-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install readline jupyter
+RUN pip3 install readline jupyter jupyterlab
 
 
 # Configure jupyter
+RUN jupyter nbextension enable --py widgetsnbextension
+RUN jupyter serverextension enable --py jupyterlab
 RUN jupyter notebook --generate-config
 RUN mkdir notebooks
 RUN sed -i "/c.NotebookApp.open_browser/c c.NotebookApp.open_browser = False" /root/.jupyter/jupyter_notebook_config.py \
@@ -44,15 +46,16 @@ RUN tar zxvf v${TINI_VERSION}.tar.gz \
 
 
 # Install usefull python packages for data scientists
-RUN apt-get install -y \
-        libhdf5-dev \
-        liblapack-dev \
-        gfortran
-RUN pip3 install requests numpy scipy scikit-learn nltk pandas seaborn tables matplotlib ipywidgets
+#RUN apt-get install -y \
+#        libhdf5-dev \
+#        liblapack-dev \
+#        gfortran
+#RUN pip3 install requests numpy scipy scikit-learn nltk pandas seaborn tables matplotlib ipywidgets
 
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 EXPOSE 8888
 
-CMD ["jupyter", "lab"]
+CMD ["jupyter", "lab", "--allow-root"]
+
