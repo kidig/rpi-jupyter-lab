@@ -6,47 +6,21 @@
 # Originally from: https://github.com/mkjiang/rpi-jupyter/blob/master/Dockerfile
 #
 
-FROM resin/rpi-raspbian:jessie
+FROM resin/raspberrypi3-python:3.6
 MAINTAINER Dmitry Gerasimenko <kiddima@gmail.com>
-
-# Set the variables
-#ENV DEBIAN_FRONTEND noninteractive
-ENV PYTHON_VERSION 3.6.6
 
 WORKDIR /root
 
-# Install packages necessary for compiling python
-RUN apt-get update && apt-get install -y \
-        build-essential \
-        libncursesw5-dev \
-        libgdbm-dev \
-        libc6-dev \
-        zlib1g-dev \
-        libsqlite3-dev \
-        tk-dev \
-        libssl-dev \
-        openssl \
-        libbz2-dev
-
-# Download and compile python
-RUN apt-get install -y ca-certificates
-ADD "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz" /root/Python-${PYTHON_VERSION}.tgz
-RUN tar zxvf "Python-${PYTHON_VERSION}.tgz" \
-        && cd Python-${PYTHON_VERSION} \
-        && ./configure \
-        && make \
-        && make install \
-        && cd .. \
-        && rm -rf "./Python-${PYTHON_VERSION}" \
-        && rm "./Python-${PYTHON_VERSION}.tgz"
-
 # Update pip and install jupyter
-RUN apt-get install -y libncurses5-dev libzmq-dev libfreetype6-dev libpng-dev
+RUN apt-get update && apt-get install -y libncurses5-dev libzmq-dev libfreetype6-dev libpng-dev
+
 RUN pip3 install --upgrade pip
-RUN pip3 install readline jupyter
+RUN pip3 install readline jupyter jupyterlab
 
 
 # Configure jupyter
+RUN jupyter nbextension enable --py widgetsnbextension
+RUN jupyter serverextension enable --py jupyterlab
 RUN jupyter notebook --generate-config
 RUN mkdir notebooks
 RUN sed -i "/c.NotebookApp.open_browser/c c.NotebookApp.open_browser = False" /root/.jupyter/jupyter_notebook_config.py \
@@ -72,15 +46,16 @@ RUN tar zxvf v${TINI_VERSION}.tar.gz \
 
 
 # Install usefull python packages for data scientists
-RUN apt-get install -y \
-        libhdf5-dev \
-        liblapack-dev \
-        gfortran
-RUN pip3 install requests numpy scipy scikit-learn nltk pandas seaborn tables matplotlib ipywidgets
+#RUN apt-get install -y \
+#        libhdf5-dev \
+#        liblapack-dev \
+#        gfortran
+#RUN pip3 install requests numpy scipy scikit-learn nltk pandas seaborn tables matplotlib ipywidgets
 
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 EXPOSE 8888
 
-CMD ["jupyter", "lab"]
+CMD ["jupyter", "lab", "--allow-root"]
+
