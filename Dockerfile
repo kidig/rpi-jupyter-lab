@@ -15,7 +15,7 @@ WORKDIR /root
 RUN apt-get update && apt-get install -y libncurses5-dev libzmq-dev libfreetype6-dev libpng-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install readline jupyter jupyterlab
+RUN pip3 install readline ipywidgets jupyter jupyterlab
 
 
 # Configure jupyter
