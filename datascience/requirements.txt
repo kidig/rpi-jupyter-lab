@@ -4,20 +4,55 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-certifi==2018.4.16        # via requests
-chardet==3.0.4            # via requests
-cycler==0.10.0            # via matplotlib
-idna==2.7                 # via requests
-kiwisolver==1.0.1         # via matplotlib
-matplotlib==2.2.0         # via -r requirements.in, seaborn
-numpy==1.15.0             # via -r requirements.in, matplotlib, pandas, scipy, seaborn
-pandas==0.23.3            # via -r requirements.in, seaborn
-pyparsing==2.2.0          # via matplotlib
-python-dateutil==2.7.3    # via matplotlib, pandas
-pytz==2018.5              # via matplotlib, pandas
-requests==2.20.0          # via -r requirements.in
-scikit-learn==0.19.2      # via -r requirements.in
-scipy==1.1.0              # via -r requirements.in, seaborn
-seaborn==0.9.0            # via -r requirements.in
-six==1.11.0               # via cycler, matplotlib, python-dateutil
-urllib3==1.24.2           # via requests
+certifi==2018.4.16
+    # via requests
+chardet==3.0.4
+    # via requests
+cycler==0.10.0
+    # via matplotlib
+idna==2.7
+    # via requests
+kiwisolver==1.0.1
+    # via matplotlib
+matplotlib==2.2.0
+    # via
+    #   -r requirements.in
+    #   seaborn
+numpy==1.22.0
+    # via
+    #   -r requirements.in
+    #   matplotlib
+    #   pandas
+    #   scipy
+    #   seaborn
+pandas==0.23.3
+    # via
+    #   -r requirements.in
+    #   seaborn
+pyparsing==2.2.0
+    # via matplotlib
+python-dateutil==2.7.3
+    # via
+    #   matplotlib
+    #   pandas
+pytz==2018.5
+    # via
+    #   matplotlib
+    #   pandas
+requests==2.20.0
+    # via -r requirements.in
+scikit-learn==0.19.2
+    # via -r requirements.in
+scipy==1.1.0
+    # via
+    #   -r requirements.in
+    #   seaborn
+seaborn==0.9.0
+    # via -r requirements.in
+six==1.11.0
+    # via
+    #   cycler
+    #   matplotlib
+    #   python-dateutil
+urllib3==1.24.2
+    # via requests
